@@ -1,7 +1,7 @@
-# ??? trouve moi un nom
+# ??? find me a name
 
-## Fonctionnalité
-### Indispensable :
+## Functionalities :
+### Essentials :
 - [ ] web access
 - [ ] messages text
 - [ ] messages vocal
