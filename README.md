@@ -22,8 +22,10 @@
 - [ ] connection status
 - [ ] customisation of the message layout
 - [ ] custom emojis
+- [ ] pinned messages
 
 ### To be V.2 :
+- [ ] dark-theme
 - [ ] sharing of large files
 - [ ] locket like
 - [ ] spotify listening
