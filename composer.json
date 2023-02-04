@@ -39,6 +39,12 @@
         }
     },
     "scripts": {
+        "cs-fix": [
+            "/opt/homebrew/opt/php@8.1/bin/php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=tools/php-cs-fixer/.php-cs-fixer.dist.php --allow-risky=yes"
+        ],
+        "cs-check": [
+            "/opt/homebrew/opt/php@8.1/bin/php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=tools/php-cs-fixer/.php-cs-fixer.dist.php --dry-run --diff --allow-risky=yes"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
