@@ -8,6 +8,7 @@
 - [ ] messages text
 - [ ] messages vocal
 - [ ] file sharing
+- [ ] preview for images
 - [ ] sent date
 - [ ] received date
 - [ ] hidden text
@@ -15,7 +16,7 @@
 - [ ] delete for me
 - [ ] hidden picture
 - [ ] message send masked for me
-- [ ] customisation of chat backgrounds
+- [ ] customization of chat backgrounds
 
 ### To be out of beta :
 
@@ -23,9 +24,13 @@
 - [ ] video call
 - [ ] emoji reactions
 - [ ] connection status
-- [ ] customisation of the message layout
+- [ ] status depending on the contact
+- [ ] customization of the message layout
 - [ ] custom emojis
 - [ ] pinned messages
+- [ ] pinned messages on thread
+- [ ] pinned contacts
+- [ ] message edit
 - [ ] date see
 
 ### To be V.2 :
