@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 use App\Models\User;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
@@ -20,8 +22,8 @@ test('api tokens can be deleted', function () {
     ]);
 
     Livewire::test(ApiTokenManager::class)
-                ->set(['apiTokenIdBeingDeleted' => $token->id])
-                ->call('deleteApiToken');
+        ->set(['apiTokenIdBeingDeleted' => $token->id])
+        ->call('deleteApiToken');
 
     expect($user->fresh()->tokens)->toHaveCount(0);
 })->skip(function () {
