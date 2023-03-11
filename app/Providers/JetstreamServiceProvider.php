@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare( strict_types=1 );
 
 namespace App\Providers;
 
@@ -33,13 +33,18 @@ class JetstreamServiceProvider extends ServiceProvider
      */
     protected function configurePermissions(): void
     {
-        Jetstream::defaultApiTokenPermissions(['read']);
+        Jetstream::defaultApiTokenPermissions([
+            'message:create',
+            'message:read',
+            'message:update',
+            'message:delete',
+        ]);
 
         Jetstream::permissions([
-            'create',
-            'read',
-            'update',
-            'delete',
+            'message:create',
+            'message:read',
+            'message:update',
+            'message:delete',
         ]);
     }
 }

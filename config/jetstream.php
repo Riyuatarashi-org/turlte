@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare( strict_types=1 );
 
 use Laravel\Jetstream\Features;
 use Laravel\Jetstream\Http\Middleware\AuthenticateSession;
@@ -30,7 +30,7 @@ return [
      |
      */
 
-    'middleware' => ['web'],
+    'middleware' => [ 'web' ],
 
     'auth_session' => AuthenticateSession::class,
 
@@ -59,10 +59,9 @@ return [
     */
 
     'features' => [
-        // Features::termsAndPrivacyPolicy(),
-        // Features::profilePhotos(),
-        // Features::api(),
-        // Features::teams(['invitations' => true]),
+        Features::termsAndPrivacyPolicy(),
+        Features::profilePhotos(),
+        Features::api(),
         Features::accountDeletion(),
     ],
 
