@@ -1,10 +1,11 @@
 <?php
 
-declare(strict_types = 1);
+declare( strict_types=1 );
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -27,7 +28,11 @@ use Laravel\Sanctum\HasApiTokens;
  * @property null|\Illuminate\Support\Carbon                                                $created_at
  * @property null|\Illuminate\Support\Carbon                                                $updated_at
  * @property null|\Illuminate\Support\Carbon                                                $deleted_at
+ *
  * @property \Illuminate\Database\Eloquent\Collection<\Laravel\Sanctum\PersonalAccessToken> $tokens
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<\App\Models\Message> $messagesSend
+ * @property-read \Illuminate\Database\Eloquent\Collection<\App\Models\Message> $messagesReceived
  */
 final class User extends Authenticatable
 {
@@ -78,4 +83,17 @@ final class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    // --------------------------------------------------
+    // ---- Relationships
+
+    public function messagesSend(): HasMany
+    {
+        return $this->hasMany(Message::class, 'author_id');
+    }
+
+    public function messagesReceived(): HasMany
+    {
+        return $this->hasMany(Message::class, 'recipient_id');
+    }
 }
