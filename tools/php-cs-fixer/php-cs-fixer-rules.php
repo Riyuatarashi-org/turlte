@@ -72,6 +72,8 @@ return [
         'sort_algorithm' => 'alpha',
     ],
 
+    'php_unit_method_casing' => [ 'case' => 'snake_case' ],
+
     'phpdoc_add_missing_param_annotation' => false,
     'phpdoc_annotation_without_dot'       => true,
     'phpdoc_to_comment'                   => true,
