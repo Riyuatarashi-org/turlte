@@ -4,8 +4,9 @@ declare(strict_types = 1);
 
 namespace App\View\Components;
 
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\View as FacadeView;
 use Illuminate\View\Component;
-use Illuminate\View\View;
 
 final class AppLayout extends Component
 {
@@ -14,6 +15,6 @@ final class AppLayout extends Component
      */
     public function render(): View
     {
-        return view('layouts.app');
+        return FacadeView::make('layouts.app');
     }
 }
