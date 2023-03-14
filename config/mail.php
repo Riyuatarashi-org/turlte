@@ -2,6 +2,8 @@
 
 declare(strict_types = 1);
 
+use Illuminate\Support\Env;
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -14,16 +16,16 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'smtp'),
+    'default' => Env::get('MAIL_MAILER', 'smtp'),
 
     /*
     |--------------------------------------------------------------------------
     | Mailer Configurations
     |--------------------------------------------------------------------------
     |
-    | Here you may configure all of the mailers used by your application plus
+    | Here you may configure all the mailers used by your application plus
     | their respective settings. Several examples have been configured for
-    | you and you are free to add your own as your application requires.
+    | you, and you are free to add your own as your application requires.
     |
     | Laravel supports a variety of mail "transport" drivers to be used while
     | sending an e-mail. You will specify which one you are using for your
@@ -37,13 +39,13 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 587),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
+            'host' => Env::get('MAIL_HOST', 'smtp.mailgun.org'),
+            'port' => Env::get('MAIL_PORT', 587),
+            'encryption' => Env::get('MAIL_ENCRYPTION', 'tls'),
+            'username' => Env::get('MAIL_USERNAME'),
+            'password' => Env::get('MAIL_PASSWORD'),
             'timeout' => null,
-            'local_domain' => env('MAIL_EHLO_DOMAIN'),
+            'local_domain' => Env::get('MAIL_EHLO_DOMAIN'),
         ],
 
         'ses' => [
@@ -60,12 +62,12 @@ return [
 
         'sendmail' => [
             'transport' => 'sendmail',
-            'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs -i'),
+            'path' => Env::get('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs -i'),
         ],
 
         'log' => [
             'transport' => 'log',
-            'channel' => env('MAIL_LOG_CHANNEL'),
+            'channel' => Env::get('MAIL_LOG_CHANNEL'),
         ],
 
         'array' => [
@@ -93,8 +95,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => Env::get('MAIL_FROM_ADDRESS', 'hello@example.com'),
+        'name' => Env::get('MAIL_FROM_NAME', 'Example'),
     ],
 
     /*

@@ -2,6 +2,7 @@
 
 declare(strict_types = 1);
 
+use Illuminate\Support\Env;
 use Illuminate\Support\Str;
 
 return [
@@ -19,7 +20,7 @@ return [
     |
     */
 
-    'driver' => env('SESSION_DRIVER', 'database'),
+    'driver' => Env::get('SESSION_DRIVER', 'database'),
 
     /*
     |--------------------------------------------------------------------------
@@ -32,7 +33,7 @@ return [
     |
     */
 
-    'lifetime' => env('SESSION_LIFETIME', 120),
+    'lifetime' => Env::get('SESSION_LIFETIME', 120),
 
     'expire_on_close' => false,
 
@@ -73,7 +74,7 @@ return [
     |
     */
 
-    'connection' => env('SESSION_CONNECTION'),
+    'connection' => Env::get('SESSION_CONNECTION'),
 
     /*
     |--------------------------------------------------------------------------
@@ -101,7 +102,7 @@ return [
     |
     */
 
-    'store' => env('SESSION_STORE'),
+    'store' => Env::get('SESSION_STORE'),
 
     /*
     |--------------------------------------------------------------------------
@@ -127,9 +128,9 @@ return [
     |
     */
 
-    'cookie' => env(
+    'cookie' => Env::get(
         'SESSION_COOKIE',
-        Str::slug(env('APP_NAME', 'laravel'), '_') . '_session'
+        Str::slug(stringify(Env::get('APP_NAME', 'laravel')), '_') . '_session'
     ),
 
     /*
@@ -139,7 +140,7 @@ return [
     |
     | The session cookie path determines the path for which the cookie will
     | be regarded as available. Typically, this will be the root path of
-    | your application but you are free to change this when necessary.
+    | your application, but you are free to change this when necessary.
     |
     */
 
@@ -156,7 +157,7 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN'),
+    'domain' => Env::get('SESSION_DOMAIN'),
 
     /*
     |--------------------------------------------------------------------------
@@ -164,12 +165,12 @@ return [
     |--------------------------------------------------------------------------
     |
     | By setting this option to true, session cookies will only be sent back
-    | to the server if the browser has a HTTPS connection. This will keep
+    | to the server if the browser has an HTTPS connection. This will keep
     | the cookie from being sent to you when it can't be done securely.
     |
     */
 
-    'secure' => env('SESSION_SECURE_COOKIE'),
+    'secure' => Env::get('SESSION_SECURE_COOKIE'),
 
     /*
     |--------------------------------------------------------------------------

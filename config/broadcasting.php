@@ -2,6 +2,8 @@
 
 declare(strict_types = 1);
 
+use Illuminate\Support\Env;
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -16,14 +18,14 @@ return [
     |
     */
 
-    'default' => env('BROADCAST_DRIVER', 'null'),
+    'default' => Env::get('BROADCAST_DRIVER', 'null'),
 
     /*
     |--------------------------------------------------------------------------
     | Broadcast Connections
     |--------------------------------------------------------------------------
     |
-    | Here you may define all of the broadcast connections that will be used
+    | Here you may define all the broadcast connections that will be used
     | to broadcast events to other systems or over websockets. Samples of
     | each available type of connection are provided inside this array.
     |
@@ -32,15 +34,18 @@ return [
     'connections' => [
         'pusher' => [
             'driver' => 'pusher',
-            'key' => env('PUSHER_APP_KEY'),
-            'secret' => env('PUSHER_APP_SECRET'),
-            'app_id' => env('PUSHER_APP_ID'),
+            'key' => Env::get('PUSHER_APP_KEY'),
+            'secret' => Env::get('PUSHER_APP_SECRET'),
+            'app_id' => Env::get('PUSHER_APP_ID'),
             'options' => [
-                'host' => env('PUSHER_HOST') ?: 'api-' . env('PUSHER_APP_CLUSTER', 'mt1') . '.pusher.com',
-                'port' => env('PUSHER_PORT', 443),
-                'scheme' => env('PUSHER_SCHEME', 'https'),
+                'host' => Env::get('PUSHER_HOST') ?: 'api-' . Env::get(
+                    'PUSHER_APP_CLUSTER',
+                    'mt1'
+                ) . '.pusher.com',
+                'port' => Env::get('PUSHER_PORT', 443),
+                'scheme' => Env::get('PUSHER_SCHEME', 'https'),
                 'encrypted' => true,
-                'useTLS' => env('PUSHER_SCHEME', 'https') === 'https',
+                'useTLS' => Env::get('PUSHER_SCHEME', 'https') === 'https',
             ],
             'client_options' => [
                 // Guzzle client options: https://docs.guzzlephp.org/en/stable/request-options.html
@@ -49,7 +54,7 @@ return [
 
         'ably' => [
             'driver' => 'ably',
-            'key' => env('ABLY_KEY'),
+            'key' => Env::get('ABLY_KEY'),
         ],
 
         'redis' => [

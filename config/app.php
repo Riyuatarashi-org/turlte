@@ -2,6 +2,7 @@
 
 declare(strict_types = 1);
 
+use Illuminate\Support\Env;
 use Illuminate\Support\Facades\Facade;
 
 return [
@@ -16,7 +17,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => Env::get('APP_NAME', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
@@ -29,7 +30,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => Env::get('APP_ENV', 'production'),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +43,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => boolify(Env::get('APP_DEBUG', false)),
 
     /*
     |--------------------------------------------------------------------------
@@ -55,9 +56,9 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => Env::get('APP_URL', 'http://localhost'),
 
-    'asset_url' => env('ASSET_URL'),
+    'asset_url' => Env::get('ASSET_URL'),
 
     /*
     |--------------------------------------------------------------------------
@@ -122,7 +123,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+    'key' => Env::get('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
 
@@ -205,7 +206,7 @@ return [
     |
     | This array of class aliases will be registered when this application
     | is started. However, feel free to register as many as you wish as
-    | the aliases are "lazy" loaded so they don't hinder performance.
+    | the aliases are "lazy" loaded, so they don't hinder performance.
     |
     */
 
