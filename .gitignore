@@ -17,3 +17,5 @@ yarn-error.log
 /.idea
 /.vscode
 /.php-cs-fixer.cache
+/.phpunit.cache
+phpunit.xml.bak
