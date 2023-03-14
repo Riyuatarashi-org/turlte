@@ -1,6 +1,6 @@
 <?php
 
-declare( strict_types=1 );
+declare(strict_types = 1);
 
 namespace App\Models;
 
@@ -12,6 +12,23 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @property int                                                                            $id
+ * @property string                                                                         $name
+ * @property string                                                                         $email
+ * @property null|\Illuminate\Support\Carbon                                                $email_verified_at
+ * @property string                                                                         $password
+ * @property null|string                                                                    $profile_photo_path
+ * @property null|string                                                                    $current_team_id
+ * @property null|string                                                                    $profile_photo_url
+ * @property null|string                                                                    $remember_token
+ * @property null|string                                                                    $two_factor_secret
+ * @property null|string                                                                    $two_factor_recovery_codes
+ * @property null|\Illuminate\Support\Carbon                                                $created_at
+ * @property null|\Illuminate\Support\Carbon                                                $updated_at
+ * @property null|\Illuminate\Support\Carbon                                                $deleted_at
+ * @property \Illuminate\Database\Eloquent\Collection<\Laravel\Sanctum\PersonalAccessToken> $tokens
+ */
 final class User extends Authenticatable
 {
     use HasApiTokens;
