@@ -6,7 +6,9 @@ namespace App\Http\Middleware;
 
 use App\Providers\RouteServiceProvider;
 use Closure;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 final class RedirectIfAuthenticated
@@ -16,16 +18,14 @@ final class RedirectIfAuthenticated
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @param null|string ...$guards
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function handle(Request $request, Closure $next, ...$guards)
+    public function handle(Request $request, Closure $next, ...$guards): RedirectResponse|Response
     {
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                return new RedirectResponse(RouteServiceProvider::HOME);
             }
         }
 
