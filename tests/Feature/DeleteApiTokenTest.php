@@ -4,10 +4,9 @@ declare(strict_types = 1);
 
 namespace Tests\Feature;
 
-use App\Models\User;
+use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
-use Laravel\Jetstream\Features;
 use Laravel\Jetstream\Http\Livewire\ApiTokenManager;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -23,14 +22,11 @@ final class DeleteApiTokenTest extends TestCase
 
     public function test_api_tokens_can_be_deleted(): void
     {
-        if (! Features::hasApiFeatures()) {
-            $this->markTestSkipped('API support is not enabled.');
+        $user = UserFactory::new()->createOne();
 
-            return;
-        }
+        $this->actingAs($user);
 
-        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
-
+        /** @var \App\Support\Sanctum\PersonalAccessToken $token */
         $token = $user->tokens()->create([
             'name' => 'Test Token',
             'token' => Str::random(40),
@@ -38,9 +34,9 @@ final class DeleteApiTokenTest extends TestCase
         ]);
 
         Livewire::test(ApiTokenManager::class)
-                    ->set(['apiTokenIdBeingDeleted' => $token->id])
-                    ->call('deleteApiToken');
+            ->set(['apiTokenIdBeingDeleted' => $token->id])
+            ->call('deleteApiToken');
 
-        $this->assertCount(0, $user->fresh()->tokens);
+        $this->assertCount(0, $user->refresh()->tokens);
     }
 }

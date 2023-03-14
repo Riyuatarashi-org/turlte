@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace Tests\Feature;
 
-use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -27,7 +27,7 @@ final class AuthenticationTest extends TestCase
 
     public function test_users_can_authenticate_using_the_login_screen(): void
     {
-        $user = User::factory()->create();
+        $user = UserFactory::new()->createOne();
 
         $response = $this->post('/login', [
             'email' => $user->email,
@@ -40,7 +40,7 @@ final class AuthenticationTest extends TestCase
 
     public function test_users_can_not_authenticate_with_invalid_password(): void
     {
-        $user = User::factory()->create();
+        $user = UserFactory::new()->createOne();
 
         $this->post('/login', [
             'email' => $user->email,

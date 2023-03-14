@@ -4,13 +4,12 @@ declare(strict_types = 1);
 
 namespace Tests\Feature;
 
-use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Database\Factories\UserFactory;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
-use Laravel\Fortify\Features;
 use Tests\TestCase;
 
 /**
@@ -24,13 +23,7 @@ final class EmailVerificationTest extends TestCase
 
     public function test_email_verification_screen_can_be_rendered(): void
     {
-        if (! Features::enabled(Features::emailVerification())) {
-            $this->markTestSkipped('Email verification not enabled.');
-
-            return;
-        }
-
-        $user = User::factory()->withPersonalTeam()->unverified()->create();
+        $user = UserFactory::new()->unverified()->createOne();
 
         $response = $this->actingAs($user)->get('/email/verify');
 
@@ -39,15 +32,9 @@ final class EmailVerificationTest extends TestCase
 
     public function test_email_can_be_verified(): void
     {
-        if (! Features::enabled(Features::emailVerification())) {
-            $this->markTestSkipped('Email verification not enabled.');
-
-            return;
-        }
-
         Event::fake();
 
-        $user = User::factory()->unverified()->create();
+        $user = UserFactory::new()->unverified()->createOne();
 
         $verificationUrl = URL::temporarySignedRoute(
             'verification.verify',
@@ -59,19 +46,13 @@ final class EmailVerificationTest extends TestCase
 
         Event::assertDispatched(Verified::class);
 
-        $this->assertTrue($user->fresh()->hasVerifiedEmail());
-        $response->assertRedirect(RouteServiceProvider::HOME.'?verified=1');
+        $this->assertTrue($user->refresh()->hasVerifiedEmail());
+        $response->assertRedirect(RouteServiceProvider::HOME . '?verified=1');
     }
 
     public function test_email_can_not_verified_with_invalid_hash(): void
     {
-        if (! Features::enabled(Features::emailVerification())) {
-            $this->markTestSkipped('Email verification not enabled.');
-
-            return;
-        }
-
-        $user = User::factory()->unverified()->create();
+        $user = UserFactory::new()->unverified()->createOne();
 
         $verificationUrl = URL::temporarySignedRoute(
             'verification.verify',
@@ -81,6 +62,6 @@ final class EmailVerificationTest extends TestCase
 
         $this->actingAs($user)->get($verificationUrl);
 
-        $this->assertFalse($user->fresh()->hasVerifiedEmail());
+        $this->assertFalse($user->refresh()->hasVerifiedEmail());
     }
 }
