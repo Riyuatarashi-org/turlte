@@ -16,14 +16,14 @@ return new class() extends Migration {
         Schema::table('users', function (Blueprint $table) {
             $table->after('password', function (Blueprint $table) {
                 $table->text('two_factor_secret')
-                        ->nullable();
+                    ->nullable();
 
                 $table->text('two_factor_recovery_codes')
-                        ->nullable();
+                    ->nullable();
 
                 if (Fortify::confirmsTwoFactorAuthentication()) {
                     $table->timestamp('two_factor_confirmed_at')
-                            ->nullable();
+                        ->nullable();
                 }
             });
         });
@@ -35,12 +35,14 @@ return new class() extends Migration {
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(array_merge([
-                'two_factor_secret',
-                'two_factor_recovery_codes',
-            ], Fortify::confirmsTwoFactorAuthentication() ? [
-                'two_factor_confirmed_at',
-            ] : []));
+            $table->dropColumn(
+                array_merge([
+                    'two_factor_secret',
+                    'two_factor_recovery_codes',
+                ], Fortify::confirmsTwoFactorAuthentication() ? [
+                    'two_factor_confirmed_at',
+                ] : [])
+            );
         });
     }
 };
