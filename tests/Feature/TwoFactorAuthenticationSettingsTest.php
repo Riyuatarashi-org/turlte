@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Tests\Feature;
 
 use Database\Factories\UserFactory;
+use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Jetstream\Http\Livewire\TwoFactorAuthenticationForm;
 use Livewire\Livewire;
@@ -36,6 +37,9 @@ final class TwoFactorAuthenticationSettingsTest extends TestCase
         $this->assertCount(8, $user->recoveryCodes());
     }
 
+    /**
+     * @throws Exception
+     */
     public function test_recovery_codes_can_be_regenerated(): void
     {
         $user = UserFactory::new()->createOne();
@@ -48,12 +52,16 @@ final class TwoFactorAuthenticationSettingsTest extends TestCase
             ->call('enableTwoFactorAuthentication')
             ->call('regenerateRecoveryCodes');
 
-        $user = $user->refresh();
+        $userRefreshed = $user->fresh();
+
+        if ($userRefreshed === null) {
+            throw new Exception('User not found');
+        }
 
         $component->call('regenerateRecoveryCodes');
 
-        $this->assertCount(8, $user->recoveryCodes());
-        $this->assertCount(8, array_diff($user->recoveryCodes(), $user->refresh()->recoveryCodes()));
+        $this->assertCount(8, $userRefreshed->recoveryCodes());
+        $this->assertCount(8, array_diff($user->recoveryCodes(), $userRefreshed->recoveryCodes()));
     }
 
     public function test_two_factor_authentication_can_be_disabled(): void
