@@ -29,7 +29,7 @@ final class ApiTokenPermissionsTest extends TestCase
         $token = $user->tokens()->create([
             'name' => 'Test Token',
             'token' => Str::random(40),
-            'abilities' => ['create', 'read'],
+            'abilities' => ['message:create', 'message:read'],
         ]);
 
         Livewire::test(ApiTokenManager::class)
@@ -37,7 +37,7 @@ final class ApiTokenPermissionsTest extends TestCase
             ->set([
                 'updateApiTokenForm' => [
                     'permissions' => [
-                        'delete',
+                        'message:delete',
                         'missing-permission',
                     ],
                 ],
@@ -47,8 +47,8 @@ final class ApiTokenPermissionsTest extends TestCase
         /** @var \Laravel\Sanctum\PersonalAccessToken $refreshedUserFirstToken */
         $refreshedUserFirstToken = $user->refresh()->tokens->firstOrFail();
 
-        $this->assertTrue($refreshedUserFirstToken->can('delete'));
-        $this->assertFalse($refreshedUserFirstToken->can('read'));
+        $this->assertTrue($refreshedUserFirstToken->can('message:delete'));
+        $this->assertFalse($refreshedUserFirstToken->can('message:read'));
         $this->assertFalse($refreshedUserFirstToken->can('missing-permission'));
     }
 }
