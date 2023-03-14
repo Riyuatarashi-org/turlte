@@ -8,7 +8,12 @@ use Laravel\Jetstream\Http\Livewire\UpdateProfileInformationForm;
 use Livewire\Livewire;
 use Tests\TestCase;
 
-class ProfileInformationTest extends TestCase
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
+final class ProfileInformationTest extends TestCase
 {
     use RefreshDatabase;
 

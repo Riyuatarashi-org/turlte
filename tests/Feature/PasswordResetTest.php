@@ -9,7 +9,12 @@ use Illuminate\Support\Facades\Notification;
 use Laravel\Fortify\Features;
 use Tests\TestCase;
 
-class PasswordResetTest extends TestCase
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
+final class PasswordResetTest extends TestCase
 {
     use RefreshDatabase;
 
