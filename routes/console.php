@@ -2,6 +2,7 @@
 
 declare(strict_types = 1);
 
+use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 
@@ -16,6 +17,9 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
-Artisan::command('inspire', function () {
+$inspireClosure = Closure::bind(function () {
     $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
+}, new Command());
+
+Artisan::command('inspire', $inspireClosure)
+    ->purpose('Display an inspiring quote');
