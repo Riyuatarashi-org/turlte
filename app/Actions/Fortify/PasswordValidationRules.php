@@ -11,7 +11,7 @@ trait PasswordValidationRules
     /**
      * Get the validation rules used to validate passwords.
      *
-     * @return array<int, array|\Illuminate\Contracts\Validation\Rule|string>
+     * @return array<int, \Illuminate\Contracts\Validation\Rule|string>
      */
     protected function passwordRules(): array
     {

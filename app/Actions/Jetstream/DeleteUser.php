@@ -6,6 +6,7 @@ namespace App\Actions\Jetstream;
 
 use App\Models\User;
 use Laravel\Jetstream\Contracts\DeletesUsers;
+use Laravel\Sanctum\PersonalAccessToken;
 
 final class DeleteUser implements DeletesUsers
 {
@@ -15,7 +16,12 @@ final class DeleteUser implements DeletesUsers
     public function delete(User $user): void
     {
         $user->deleteProfilePhoto();
-        $user->tokens->each->delete();
+
+        foreach ($user->tokens as $token) {
+            /* @var PersonalAccessToken $token */
+            $token->delete();
+        }
+
         $user->delete();
     }
 }
