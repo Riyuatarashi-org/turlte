@@ -2,6 +2,8 @@
 
 declare(strict_types = 1);
 
+use Illuminate\Support\Env;
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -30,7 +32,7 @@ return [
     */
 
     'bcrypt' => [
-        'rounds' => env('BCRYPT_ROUNDS', 10),
+        'rounds' => Env::get('BCRYPT_ROUNDS', 10),
     ],
 
     /*

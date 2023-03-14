@@ -1,41 +1,51 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Feature;
 
-use App\Models\User;
+use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Laravel\Jetstream\Features;
 use Laravel\Jetstream\Http\Livewire\ApiTokenManager;
 use Livewire\Livewire;
 use Tests\TestCase;
 
-class CreateApiTokenTest extends TestCase
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
+final class CreateApiTokenTest extends TestCase
 {
     use RefreshDatabase;
 
     public function test_api_tokens_can_be_created(): void
     {
-        if (! Features::hasApiFeatures()) {
-            $this->markTestSkipped('API support is not enabled.');
+        $user = UserFactory::new()->createOne();
 
-            return;
-        }
-
-        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+        $this->actingAs($user);
 
         Livewire::test(ApiTokenManager::class)
-                    ->set(['createApiTokenForm' => [
-                        'name' => 'Test Token',
-                        'permissions' => [
-                            'read',
-                            'update',
-                        ],
-                    ]])
-                    ->call('createApiToken');
+            ->set([
+                'createApiTokenForm' => [
+                    'name' => 'Test Token',
+                    'permissions' => [
+                        'read',
+                        'update',
+                    ],
+                ],
+            ])
+            ->call('createApiToken');
 
-        $this->assertCount(1, $user->fresh()->tokens);
-        $this->assertEquals('Test Token', $user->fresh()->tokens->first()->name);
-        $this->assertTrue($user->fresh()->tokens->first()->can('read'));
-        $this->assertFalse($user->fresh()->tokens->first()->can('delete'));
+        $refreshedUser = $user->refresh();
+
+        /** @var \App\Support\Sanctum\PersonalAccessToken $refreshedUserFirstToken */
+        $refreshedUserFirstToken = $refreshedUser->tokens->firstOrFail();
+
+        $this->assertCount(1, $refreshedUser->tokens);
+        $this->assertTrue($refreshedUserFirstToken->can('read'));
+        $this->assertFalse($refreshedUserFirstToken->can('delete'));
+
+        $this->assertEquals('Test Token', $refreshedUserFirstToken->name);
     }
 }

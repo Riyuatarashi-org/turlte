@@ -2,6 +2,7 @@
 
 declare(strict_types = 1);
 
+use Illuminate\Support\Env;
 use Illuminate\Support\Str;
 
 return [
@@ -16,7 +17,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => Env::get('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -37,21 +38,21 @@ return [
     'connections' => [
         'sqlite' => [
             'driver' => 'sqlite',
-            'url' => env('DATABASE_URL'),
-            'database' => env('DB_DATABASE', database_path('database.sqlite')),
+            'url' => Env::get('DATABASE_URL'),
+            'database' => Env::get('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
-            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
+            'foreign_key_constraints' => Env::get('DB_FOREIGN_KEYS', true),
         ],
 
         'mysql' => [
             'driver' => 'mysql',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'unix_socket' => env('DB_SOCKET', ''),
+            'url' => Env::get('DATABASE_URL'),
+            'host' => Env::get('DB_HOST', '127.0.0.1'),
+            'port' => Env::get('DB_PORT', '3306'),
+            'database' => Env::get('DB_DATABASE', 'forge'),
+            'username' => Env::get('DB_USERNAME', 'forge'),
+            'password' => Env::get('DB_PASSWORD', ''),
+            'unix_socket' => Env::get('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
@@ -59,18 +60,18 @@ return [
             'strict' => true,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                PDO::MYSQL_ATTR_SSL_CA => Env::get('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'url' => Env::get('DATABASE_URL'),
+            'host' => Env::get('DB_HOST', '127.0.0.1'),
+            'port' => Env::get('DB_PORT', '5432'),
+            'database' => Env::get('DB_DATABASE', 'forge'),
+            'username' => Env::get('DB_USERNAME', 'forge'),
+            'password' => Env::get('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
@@ -80,17 +81,17 @@ return [
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '1433'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'url' => Env::get('DATABASE_URL'),
+            'host' => Env::get('DB_HOST', 'localhost'),
+            'port' => Env::get('DB_PORT', '1433'),
+            'database' => Env::get('DB_DATABASE', 'forge'),
+            'username' => Env::get('DB_USERNAME', 'forge'),
+            'password' => Env::get('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
-            // 'encrypt' => env('DB_ENCRYPT', 'yes'),
-            // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
+            // 'encrypt' => Env::get('DB_ENCRYPT', 'yes'),
+            // 'trust_server_certificate' => Env::get('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
     ],
 
@@ -119,29 +120,32 @@ return [
     */
 
     'redis' => [
-        'client' => env('REDIS_CLIENT', 'phpredis'),
+        'client' => Env::get('REDIS_CLIENT', 'phpredis'),
 
         'options' => [
-            'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
+            'cluster' => Env::get('REDIS_CLUSTER', 'redis'),
+            'prefix' => Env::get(
+                'REDIS_PREFIX',
+                Str::slug(stringify(Env::get('APP_NAME', 'laravel')), '_') . '_database_'
+            ),
         ],
 
         'default' => [
-            'url' => env('REDIS_URL'),
-            'host' => env('REDIS_HOST', '127.0.0.1'),
-            'username' => env('REDIS_USERNAME'),
-            'password' => env('REDIS_PASSWORD'),
-            'port' => env('REDIS_PORT', '6379'),
-            'database' => env('REDIS_DB', '0'),
+            'url' => Env::get('REDIS_URL'),
+            'host' => Env::get('REDIS_HOST', '127.0.0.1'),
+            'username' => Env::get('REDIS_USERNAME'),
+            'password' => Env::get('REDIS_PASSWORD'),
+            'port' => Env::get('REDIS_PORT', '6379'),
+            'database' => Env::get('REDIS_DB', '0'),
         ],
 
         'cache' => [
-            'url' => env('REDIS_URL'),
-            'host' => env('REDIS_HOST', '127.0.0.1'),
-            'username' => env('REDIS_USERNAME'),
-            'password' => env('REDIS_PASSWORD'),
-            'port' => env('REDIS_PORT', '6379'),
-            'database' => env('REDIS_CACHE_DB', '1'),
+            'url' => Env::get('REDIS_URL'),
+            'host' => Env::get('REDIS_HOST', '127.0.0.1'),
+            'username' => Env::get('REDIS_USERNAME'),
+            'password' => Env::get('REDIS_PASSWORD'),
+            'port' => Env::get('REDIS_PORT', '6379'),
+            'database' => Env::get('REDIS_CACHE_DB', '1'),
         ],
     ],
 ];

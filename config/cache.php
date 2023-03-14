@@ -2,6 +2,7 @@
 
 declare(strict_types = 1);
 
+use Illuminate\Support\Env;
 use Illuminate\Support\Str;
 
 return [
@@ -16,14 +17,14 @@ return [
     |
     */
 
-    'default' => env('CACHE_DRIVER', 'file'),
+    'default' => Env::get('CACHE_DRIVER', 'file'),
 
     /*
     |--------------------------------------------------------------------------
     | Cache Stores
     |--------------------------------------------------------------------------
     |
-    | Here you may define all of the cache "stores" for your application as
+    | Here you may define all the cache "stores" for your application as
     | well as their drivers. You may even define multiple stores for the
     | same cache driver to group types of items stored in your caches.
     |
@@ -56,18 +57,18 @@ return [
 
         'memcached' => [
             'driver' => 'memcached',
-            'persistent_id' => env('MEMCACHED_PERSISTENT_ID'),
+            'persistent_id' => Env::get('MEMCACHED_PERSISTENT_ID'),
             'sasl' => [
-                env('MEMCACHED_USERNAME'),
-                env('MEMCACHED_PASSWORD'),
+                Env::get('MEMCACHED_USERNAME'),
+                Env::get('MEMCACHED_PASSWORD'),
             ],
             'options' => [
                 // Memcached::OPT_CONNECT_TIMEOUT => 2000,
             ],
             'servers' => [
                 [
-                    'host' => env('MEMCACHED_HOST', '127.0.0.1'),
-                    'port' => env('MEMCACHED_PORT', 11211),
+                    'host' => Env::get('MEMCACHED_HOST', '127.0.0.1'),
+                    'port' => Env::get('MEMCACHED_PORT', 11211),
                     'weight' => 100,
                 ],
             ],
@@ -81,11 +82,11 @@ return [
 
         'dynamodb' => [
             'driver' => 'dynamodb',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
-            'table' => env('DYNAMODB_CACHE_TABLE', 'cache'),
-            'endpoint' => env('DYNAMODB_ENDPOINT'),
+            'key' => Env::get('AWS_ACCESS_KEY_ID'),
+            'secret' => Env::get('AWS_SECRET_ACCESS_KEY'),
+            'region' => Env::get('AWS_DEFAULT_REGION', 'us-east-1'),
+            'table' => Env::get('DYNAMODB_CACHE_TABLE', 'cache'),
+            'endpoint' => Env::get('DYNAMODB_ENDPOINT'),
         ],
 
         'octane' => [
@@ -104,5 +105,5 @@ return [
     |
     */
 
-    'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_cache_'),
+    'prefix' => Env::get('CACHE_PREFIX', Str::slug(stringify(Env::get('APP_NAME', 'laravel')), '_') . '_cache_'),
 ];
