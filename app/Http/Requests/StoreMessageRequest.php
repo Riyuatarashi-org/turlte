@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Requests;
 
 use App\Models\Message;
@@ -15,7 +17,7 @@ class StoreMessageRequest extends FormRequest
     {
         $user = $this->user();
 
-        if (!$user instanceof User) {
+        if (! $user instanceof User) {
             return false;
         }
 
@@ -25,21 +27,21 @@ class StoreMessageRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array<string>|string>
+     * @return array<string, array<string>|\Illuminate\Contracts\Validation\Rule|string>
      */
     public function rules(): array
     {
         return [
-            'message'      => [ 'required', 'string', 'max:65535' ],
+            'message' => ['required', 'string', 'max:65535'],
 
             // Relations
-            'author_id'    => [ 'required', 'integer', 'exists:users,id' ],
-            'recipient_id' => [ 'nullable', 'integer', 'exists:users,id' ],
+            'author_id' => ['required', 'integer', 'exists:users,id'],
+            'recipient_id' => ['nullable', 'integer', 'exists:users,id'],
 
             // Timestamps
-            'sent_at'      => [ 'required', 'date_format:Y-m-d H:i:s' ],
-            'received_at'  => [ 'nullable', 'date_format:Y-m-d H:i:s' ],
-            'read_at'      => [ 'nullable', 'date_format:Y-m-d H:i:s' ],
+            'sent_at' => ['required', 'date_format:Y-m-d H:i:s'],
+            'received_at' => ['nullable', 'date_format:Y-m-d H:i:s'],
+            'read_at' => ['nullable', 'date_format:Y-m-d H:i:s'],
         ];
     }
 }

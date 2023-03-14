@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Policies;
 
 use App\Models\Message;
@@ -20,7 +22,7 @@ class MessagePolicy
      */
     public function view(User $user, Message $message): bool
     {
-        return ( $user->id === $message->author_id || $user->id === $message->recipient_id );
+        return  $user->id === $message->author_id || $user->id === $message->recipient_id;
     }
 
     /**

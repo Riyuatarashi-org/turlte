@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types = 1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class() extends Migration {
     /**
      * Run the migrations.
      */
@@ -18,27 +20,27 @@ return new class extends Migration {
             // ----
 
             $table->foreignId('author_id')
-                  ->nullable()
-                  ->constrained('users')
-                  ->onUpdate('cascade')
-                  ->onDelete('set null');
+                ->nullable()
+                ->constrained('users')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
 
             $table->foreignId('recipient_id')
-                  ->nullable()
-                  ->constrained('users')
-                  ->onUpdate('cascade')
-                  ->onDelete('set null');
+                ->nullable()
+                ->constrained('users')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
 
             // ----
 
             $table->dateTime('sent_at')
-                  ->useCurrent();
+                ->useCurrent();
 
             $table->dateTime('received_at')
-                  ->nullable();
+                ->nullable();
 
             $table->dateTime('read_at')
-                  ->nullable();
+                ->nullable();
 
             $table->timestamps();
             $table->softDeletes();

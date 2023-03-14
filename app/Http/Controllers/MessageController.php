@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMessageRequest;
@@ -21,8 +23,8 @@ class MessageController extends Controller
         return new JsonResponse(
             [
                 'data' => Message::query()
-                                 ->where('recipient_id', '=', $this->user?->id)
-                                 ->get(),
+                    ->where('recipient_id', '=', $this->user?->id)
+                    ->get(),
             ],
             200
         );

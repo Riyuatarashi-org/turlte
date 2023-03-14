@@ -1,6 +1,6 @@
 <?php
 
-declare( strict_types=1 );
+declare(strict_types = 1);
 
 namespace Database\Seeders;
 
@@ -21,12 +21,12 @@ final class DatabaseSeeder extends Seeder
     {
         if (App::environment('local')) {
             UserFactory::new()
-                       ->create([
-                           'name'              => 'Admin',
-                           'email'             => 'dev@moee.fr',
-                           'email_verified_at' => now(),
-                           'password'          => Hash::make('admin'),
-                       ]);
+                ->create([
+                    'name' => 'Admin',
+                    'email' => 'dev@moee.fr',
+                    'email_verified_at' => now(),
+                    'password' => Hash::make('admin'),
+                ]);
         }
     }
 }

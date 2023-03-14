@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,15 +15,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int                             $author_id
  * @property null|int                        $recipient_id
  * @property \Illuminate\Support\Carbon      $sent_at
- * @property \Illuminate\Support\Carbon|null $received_at
- * @property \Illuminate\Support\Carbon|null $read_at
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * ----
- * Relations:
- * @property-read \App\Models\User           $author
- * @property-read null|\App\Models\User      $recipient
+ * @property null|\Illuminate\Support\Carbon $received_at
+ * @property null|\Illuminate\Support\Carbon $read_at
+ * @property null|\Illuminate\Support\Carbon $created_at
+ * @property null|\Illuminate\Support\Carbon $updated_at
+ * @property null|\Illuminate\Support\Carbon $deleted_at
+ *                                                         ----
+ *                                                         Relations:
+ * @property \App\Models\User                $author
+ * @property null|\App\Models\User           $recipient
  */
 class Message extends Model
 {
@@ -34,9 +36,9 @@ class Message extends Model
 
     /** @var string[] */
     protected $casts = [
-        'sent_at'     => 'datetime',
+        'sent_at' => 'datetime',
         'received_at' => 'datetime',
-        'read_at'     => 'datetime',
+        'read_at' => 'datetime',
     ];
 
     // --------------------------------------------------

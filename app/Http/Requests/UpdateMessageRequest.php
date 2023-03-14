@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Requests;
 
 use App\Models\Message;
@@ -15,7 +17,7 @@ class UpdateMessageRequest extends FormRequest
     {
         $user = $this->user();
 
-        if (!$user instanceof User) {
+        if (! $user instanceof User) {
             return false;
         }
 
@@ -25,21 +27,21 @@ class UpdateMessageRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array<string>|string>
+     * @return array<string, array<string>|\Illuminate\Contracts\Validation\Rule|string>
      */
     public function rules(): array
     {
         return [
-            'message'      => [ 'required', 'string', 'max:65535' ],
+            'message' => ['required', 'string', 'max:65535'],
 
             // Relations
-            'author_id'    => [ 'prohibited' ],
-            'recipient_id' => [ 'prohibited' ],
+            'author_id' => ['prohibited'],
+            'recipient_id' => ['prohibited'],
 
             // Timestamps
-            'sent_at'      => [ 'prohibited' ],
-            'received_at'  => [ 'nullable', 'date_format:Y-m-d H:i:s' ],
-            'read_at'      => [ 'nullable', 'date_format:Y-m-d H:i:s' ],
+            'sent_at' => ['prohibited'],
+            'received_at' => ['nullable', 'date_format:Y-m-d H:i:s'],
+            'read_at' => ['nullable', 'date_format:Y-m-d H:i:s'],
         ];
     }
 }
